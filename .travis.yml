@@ -1,8 +1,10 @@
-language: java
-jdk:
-  - oraclejdk8
-before_install:
-  - chmod +x gradlew
-  - chmod +x gradle/wrapper/gradle-wrapper.jar
-script:
-  - ./gradlew test build
+language: android
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-28.0.0
+    - android-28
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
