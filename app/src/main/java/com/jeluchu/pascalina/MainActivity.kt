@@ -180,10 +180,10 @@ class MainActivity : AppCompatActivity(), HistoryActionListDialogFragment.Listen
 
             val charsLimit = if (valorActual.first().isDigit()) 1 else 2
 
-            if (valorActual.length > charsLimit) {
-                valorActual = valorActual.substring(0, valorActual.length - 1)
+            valorActual = if (valorActual.length > charsLimit) {
+                valorActual.substring(0, valorActual.length - 1)
             } else {
-                valorActual = CERO
+                CERO
             }
 
             tvResultado.text = valorActual
@@ -314,16 +314,20 @@ class MainActivity : AppCompatActivity(), HistoryActionListDialogFragment.Listen
             POTENCIA -> numOpActual *= numOpActual
         }
 
-        if (instanteBotonPulsado) {
-            historialOpTexto = "($historialOpTexto)"
-            historialOpTexto = StringBuilder().append(operation).append(historialOpTexto).toString()
-            tvHistorial.text = if (igualPulsado) historialOpTexto else StringBuilder().append(tHistorial).append(opActual).append(historialOpTexto).toString()
-        } else if (igualPulsado) {
-            historialOpTexto = StringBuilder().append(operation).append(valorActual).toString()
-            tvHistorial.text = historialOpTexto
-        } else {
-            historialOpTexto = StringBuilder().append(operation).append(valorActual).toString()
-            tvHistorial.text = StringBuilder().append(tHistorial).append(opActual).append(historialOpTexto).toString()
+        when {
+            instanteBotonPulsado -> {
+                historialOpTexto = "($historialOpTexto)"
+                historialOpTexto = StringBuilder().append(operation).append(historialOpTexto).toString()
+                tvHistorial.text = if (igualPulsado) historialOpTexto else StringBuilder().append(tHistorial).append(opActual).append(historialOpTexto).toString()
+            }
+            igualPulsado -> {
+                historialOpTexto = StringBuilder().append(operation).append(valorActual).toString()
+                tvHistorial.text = historialOpTexto
+            }
+            else -> {
+                historialOpTexto = StringBuilder().append(operation).append(valorActual).toString()
+                tvHistorial.text = StringBuilder().append(tHistorial).append(opActual).append(historialOpTexto).toString()
+            }
         }
 
         tvResultado.text = formatDoubleToString(numOpActual)

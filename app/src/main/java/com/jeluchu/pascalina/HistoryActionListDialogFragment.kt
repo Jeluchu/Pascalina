@@ -15,6 +15,7 @@ import android.widget.Toast
 import java.util.*
 
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class HistoryActionListDialogFragment : BottomSheetDialogFragment() {
 
     private var mListener: Listener? = null
@@ -22,12 +23,12 @@ class HistoryActionListDialogFragment : BottomSheetDialogFragment() {
     private lateinit var mData: ArrayList<String>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_history_action_list_dialog, container, false)
+        return inflater.inflate(R.layout.fragment_history_action_list_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Initializing an ArrayList in one line when fragment is already attached to Activity and string resources are available to reach.
-        mData = ArrayList<String>(Arrays.asList(getString(R.string.no_history)))
+        mData = ArrayList(Arrays.asList(getString(R.string.no_history)))
 
         val data = arguments!!.getStringArrayList(ARG_HISTORY_ACTION)
         if (data.isNotEmpty()) {
@@ -35,7 +36,7 @@ class HistoryActionListDialogFragment : BottomSheetDialogFragment() {
             mData.addAll(data)
         }
 
-        val recyclerView = view!!.findViewById<View>(R.id.list) as RecyclerView?
+        val recyclerView = view.findViewById<View>(R.id.list) as RecyclerView?
         recyclerView!!.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = ItemAdapter(mData)
 
@@ -52,10 +53,10 @@ class HistoryActionListDialogFragment : BottomSheetDialogFragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         val parent = parentFragment
-        if (parent != null) {
-            mListener = parent as Listener
+        mListener = if (parent != null) {
+            parent as Listener
         } else {
-            mListener = context as Listener?
+            context as Listener?
         }
     }
 
@@ -95,7 +96,7 @@ class HistoryActionListDialogFragment : BottomSheetDialogFragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             // Regular expression lookbehind with delimiter "="
             val reg = Regex("(?<=[=])")
-            val historyActionList = mHistoryActionList.get(position).split(reg)
+            val historyActionList = mHistoryActionList[position].split(reg)
             holder.actionTextView.text = if (historyActionList.size == 1) "" else historyActionList.first()
             holder.resultTextView.text = historyActionList.last().trim()
         }
@@ -108,7 +109,7 @@ class HistoryActionListDialogFragment : BottomSheetDialogFragment() {
 
     companion object {
 
-        private val ARG_HISTORY_ACTION = "history_action"
+        private const val ARG_HISTORY_ACTION = "history_action"
 
         fun newInstance(historyActionList: ArrayList<String>): HistoryActionListDialogFragment {
             val fragment = HistoryActionListDialogFragment()
