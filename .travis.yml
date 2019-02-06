@@ -12,3 +12,4 @@ before_script:
  - chmod +x gradlew
 script:
 - ./gradlew build --stacktrace
+- chmod +x ./gradlew
