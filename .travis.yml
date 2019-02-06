@@ -41,4 +41,5 @@ cache:
 - ./gradlew dependencies || true
 
 script:
+- chmod +x ./gradlew
 - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
