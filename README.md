@@ -2,7 +2,6 @@
 
 [![API](https://img.shields.io/badge/API-18%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18)
 [![Download](https://img.shields.io/badge/Kotlin-1.3.20-brightgreen.svg?style=flat&logo=kotlin)](https://kotlinlang.org/docs/reference/whatsnew13.html)
-[![Build Status](https://travis-ci.org/Jeluchu/pascalina.svg?branch=master)](https://travis-ci.org/Jeluchu/pascalina/)
 
 A new calculator comes to your Android device!
 
